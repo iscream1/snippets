@@ -2,7 +2,8 @@
 
 A szervernél kisebb az esélye, hogy NAT-olva van, ezért célszerû azt befogni szervernek, és a kliensrõl hozzá csatlakozni az interneten keresztül, és byte streamet beolvasni/küldeni.
 
-```server = new TcpListener(IPAddress.Any, port);
+```
+server = new TcpListener(IPAddress.Any, port);
 server.Start();
 while (client == null || client.Connected == false)
 {
@@ -28,14 +29,15 @@ while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
         {
         	wrapper.Send(dataArray[1]);
         }
-}´´´
-
+}
+```
 ## 2. Billentyûlenyomások szimulálása kódból
 
 Windows alatt van erre egy rendkívül jól megírt API, a [SendKeys](https://msdn.microsoft.com/en-us/library/system.windows.forms.sendkeys(v=vs.110).aspx). Erre írtam egy wrappert, ami a gyakran használt kifejezéseket leegyszerûsíti. A ´(seq)(/seq)´ tagek között lévõ szöveget alakítja át, és küldi ki egyszerre, billentyûkombinációként is. Pl: ´(seq)\s\f2(/seq)´ a Shift+F2 kombinációt eredményezi (´+{F2}´ SendKeys szintaxis szerint). Ha nem F billentyû áll a végén, akkor más karakter is állhat utána, pl ´\c\sf´ Ctrl+Shift+F lesz, de használható a SendKeys szintaxis is a seq tagen belül.
 
 Seq tagen belüli szintaxis kezelõföggvény részlete:
-´//key sequences must be sent together
+```
+//key sequences must be sent together
 private void SendFast(string toSend)
 {
 	StringBuilder output = new StringBuilder();
@@ -59,20 +61,24 @@ private void SendFast(string toSend)
                             output.Append("%"); output.Append(s.Substring(1)); break;
 ...
 	SendKeys.SendWait(output.ToString());
-}´
+}
+```
 
 A seq tagen kívül lévõ karaktereket külön szimulálja a szerver, és közöttük random idõközt vár, hogy úgy tûnjön, mintha egy valódi ember gépelné. Ha csak billentyûkombinációt küldünk, akkor seq tagen belül adunk információt, így ez a billentyûkombinációkat nem érinti.
 
-´//wait between each character, simulating a real person typing
+```
+//wait between each character, simulating a real person typing
 private void SendSlow(string s)
 {
 	SendKeys.SendWait(s);
 	Thread.Sleep(rand.Next(25, 100));
-}´
+}
+```
 
 Néhány karakternek a SendKeys szintaxison belül sajátos jelentése van, így azokat escapelni kell {} tagek közé. Ilyen a {, }, (, ), és még más kevésbé használtak. Ezek nyilvánvalóan a lassú szögvegnél jelentenek problémát, mivel billentyûkombinációban nem gyakran szerepel "{" **billentyû**.
 
-´switch (c)
+```
+switch (c)
 {
 	//cases for single characters that need special wrapping in SendKeys
 	case '{':
@@ -85,4 +91,5 @@ Néhány karakternek a SendKeys szintaxison belül sajátos jelentése van, így azoka
 	{
 		SendFast("{}}");
 	}
-	break;´
+	break;
+```
