@@ -1,4 +1,4 @@
-##1. Socket kommunikáció kliens és szerver között
+## 1. Socket kommunikáció kliens és szerver között
 
 A szervernél kisebb az esélye, hogy NAT-olva van, ezért célszerû azt befogni szervernek, és a kliensrõl hozzá csatlakozni az interneten keresztül, és byte streamet beolvasni/küldeni.
 
@@ -30,7 +30,7 @@ while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
         }
 }´´´
 
-##2. Billentyûlenyomások szimulálása kódból
+## 2. Billentyûlenyomások szimulálása kódból
 
 Windows alatt van erre egy rendkívül jól megírt API, a [SendKeys](https://msdn.microsoft.com/en-us/library/system.windows.forms.sendkeys(v=vs.110).aspx). Erre írtam egy wrappert, ami a gyakran használt kifejezéseket leegyszerûsíti. A ´(seq)(/seq)´ tagek között lévõ szöveget alakítja át, és küldi ki egyszerre, billentyûkombinációként is. Pl: ´(seq)\s\f2(/seq)´ a Shift+F2 kombinációt eredményezi (´+{F2}´ SendKeys szintaxis szerint). Ha nem F billentyû áll a végén, akkor más karakter is állhat utána, pl ´\c\sf´ Ctrl+Shift+F lesz, de használható a SendKeys szintaxis is a seq tagen belül.
 
