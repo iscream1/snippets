@@ -2,7 +2,7 @@
 
 A szervernél kisebb az esélye, hogy NAT-olva van, ezért célszerû azt befogni szervernek, és a kliensrõl hozzá csatlakozni az interneten keresztül, és byte streamet beolvasni/küldeni.
 
-´server = new TcpListener(IPAddress.Any, port);
+´´´server = new TcpListener(IPAddress.Any, port);
 server.Start();
 while (client == null || client.Connected == false)
 {
@@ -28,7 +28,7 @@ while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
         {
         	wrapper.Send(dataArray[1]);
         }
-}´
+}´´´
 
 ##2. Billentyûlenyomások szimulálása kódból
 
