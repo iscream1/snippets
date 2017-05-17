@@ -28,7 +28,7 @@ while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
         {
         	wrapper.Send(dataArray[1]);
         }
-}```
+}´´´
 
 ## 2. Billentyûlenyomások szimulálása kódból
 
