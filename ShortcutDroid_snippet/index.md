@@ -12,6 +12,7 @@ while (client == null || client.Connected == false)
 stream = client.GetStream();
 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
 {
+	data = System.Text.Encoding.UTF8.GetString(bytes, 0, i);
 	string[] dataArray=data.Split(new[] { "<sprtr>" }, StringSplitOptions.None);
 	//initial setup needed when connecting
 	if (dataArray[0]=="setup")
