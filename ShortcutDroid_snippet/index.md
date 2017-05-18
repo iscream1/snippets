@@ -1,6 +1,6 @@
 ﻿# Mi is ez?
 
-A ShortcutDroid egy. a Microsoft SendKeys API-ra épülő Android alapú kiegészítő billentyűzet, amelynek a célja, hogy Windows alatt képesek legyünk alkalmazásonként előre konfigurált billentyű-, vagy billentyűkombináció-leütéseket szimulálni.
+A ShortcutDroid egy, a Microsoft SendKeys API-ra épülő, Android alapú kiegészítő billentyűzet, amelynek célja, hogy Windows alatt képesek legyünk alkalmazásonként előre konfigurált billentyű-, vagy billentyűkombináció-leütéseket szimulálni.
 
 ## 1. Socket kommunikáció kliens és szerver között
 
