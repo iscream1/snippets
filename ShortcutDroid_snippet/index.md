@@ -1,6 +1,10 @@
-## 1. Socket kommunikáció kliens és szerver között
+ï»¿### Mi is ez?
 
-A szervernél kisebb az esélye, hogy NAT-olva van, ezért célszerû azt befogni szervernek, és a kliensrõl hozzá csatlakozni az interneten keresztül, és byte streamet beolvasni/küldeni.
+A ShortcutDroid egy. a Microsoft SendKeys API-ra Ã©pÃ¼lÅ‘ Android alapÃº kiegÃ©szÃ­tÅ‘ billentyÅ±zet, amelynek a cÃ©lja, hogy Windows alatt kÃ©pesek legyÃ¼nk alkalmazÃ¡sonkÃ©nt elÅ‘re konfigurÃ¡lt billentyÅ±-, vagy billentyÅ±kombinÃ¡ciÃ³-leÃ¼tÃ©seket szimulÃ¡lni.
+
+## 1. Socket kommunikÃ¡ciÃ³ kliens Ã©s szerver kÃ¶zÃ¶tt
+
+A szervernÃ©l kisebb az esÃ©lye, hogy NAT-olva van, ezÃ©rt cÃ©lszerÅ± azt befogni szervernek, Ã©s a kliensrÅ‘l hozzÃ¡ csatlakozni az interneten keresztÃ¼l, Ã©s byte streamet beolvasni/kÃ¼ldeni.
 
 ```
 server = new TcpListener(IPAddress.Any, port);
@@ -32,11 +36,11 @@ while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
         }
 }
 ```
-## 2. Billentyûlenyomások szimulálása kódból 
+## 2. BillentyÅ±lenyomÃ¡sok szimulÃ¡lÃ¡sa kÃ³dbÃ³l 
 
-Windows alatt van erre egy rendkívül jól megírt API, a [SendKeys](https://msdn.microsoft.com/en-us/library/system.windows.forms.sendkeys(v=vs.110).aspx). Erre írtam egy wrappert, ami a gyakran használt kifejezéseket leegyszerûsíti. A `(seq)(/seq)` tagek között lévõ szöveget alakítja át, és küldi ki egyszerre, billentyûkombinációként is. Pl: `(seq)\s\f2(/seq)` a Shift+F2 kombinációt eredményezi (`+{F2}` SendKeys szintaxis szerint). Ha nem F billentyû áll a végén, akkor más karakter is állhat utána, pl `\c\sf` Ctrl+Shift+F lesz, de használható a SendKeys szintaxis is a seq tagen belül.
+Windows alatt van erre egy rendkÃ­vÃ¼l jÃ³l megÃ­rt API, a [SendKeys](https://msdn.microsoft.com/en-us/library/system.windows.forms.sendkeys(v=vs.110).aspx). Erre Ã­rtam egy wrappert, ami a gyakran hasznÃ¡lt kifejezÃ©seket leegyszerÅ±sÃ­ti. A `(seq)(/seq)` tagek kÃ¶zÃ¶tt lÃ©vÅ‘ szÃ¶veget alakÃ­tja Ã¡t, Ã©s kÃ¼ldi ki egyszerre, billentyÅ±kombinÃ¡ciÃ³kÃ©nt is. Pl: `(seq)\s\f2(/seq)` a Shift+F2 kombinÃ¡ciÃ³t eredmÃ©nyezi (`+{F2}` SendKeys szintaxis szerint). Ha nem F billentyÅ± Ã¡ll a vÃ©gÃ©n, akkor mÃ¡s karakter is Ã¡llhat utÃ¡na, pl `\c\sf` Ctrl+Shift+F lesz, de hasznÃ¡lhatÃ³ a SendKeys szintaxis is a seq tagen belÃ¼l.
 
-Seq tagen belüli szintaxis kezelõföggvény részlete:
+Seq tagen belÃ¼li szintaxis kezelÅ‘fÃ¶ggvÃ©ny rÃ©szlete:
 ```
 //key sequences must be sent together
 private void SendFast(string toSend)
@@ -65,7 +69,7 @@ private void SendFast(string toSend)
 }
 ```
 
-A seq tagen kívül lévõ karaktereket külön szimulálja a szerver, és közöttük random idõközt vár, hogy úgy tûnjön, mintha egy valódi ember gépelné. Ha csak billentyûkombinációt küldünk, akkor seq tagen belül adunk információt, így ez a billentyûkombinációkat nem érinti.
+A seq tagen kÃ­vÃ¼l lÃ©vÅ‘ karaktereket kÃ¼lÃ¶n szimulÃ¡lja a szerver, Ã©s kÃ¶zÃ¶ttÃ¼k random idÅ‘kÃ¶zt vÃ¡r, hogy Ãºgy tÅ±njÃ¶n, mintha egy valÃ³di ember gÃ©pelnÃ©. Ha csak billentyÅ±kombinÃ¡ciÃ³t kÃ¼ldÃ¼nk, akkor seq tagen belÃ¼l adunk informÃ¡ciÃ³t, Ã­gy ez a billentyÅ±kombinÃ¡ciÃ³kat nem Ã©rinti.
 
 ```
 //wait between each character, simulating a real person typing
@@ -76,7 +80,7 @@ private void SendSlow(string s)
 }
 ```
 
-Néhány karakternek a SendKeys szintaxison belül sajátos jelentése van, így azokat escapelni kell {} tagek közé. Ilyen a {, }, (, ), és még más kevésbé használtak. Ezek nyilvánvalóan a lassú szögvegnél jelentenek problémát, mivel billentyûkombinációban nem gyakran szerepel "{" **billentyû**.
+NÃ©hÃ¡ny karakternek a SendKeys szintaxison belÃ¼l sajÃ¡tos jelentÃ©se van, Ã­gy azokat escapelni kell {} tagek kÃ¶zÃ©. Ilyen a {, }, (, ), Ã©s mÃ©g mÃ¡s kevÃ©sbÃ© hasznÃ¡ltak. Ezek nyilvÃ¡nvalÃ³an a lassÃº szÃ¶gvegnÃ©l jelentenek problÃ©mÃ¡t, mivel billentyÅ±kombinÃ¡ciÃ³ban nem gyakran szerepel "{" **billentyÅ±**.
 
 ```
 switch (c)
